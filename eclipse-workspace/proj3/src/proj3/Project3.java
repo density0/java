@@ -1,32 +1,65 @@
 package proj3;
-
-/**
- * <p>Title: Volunteering hours </p> 
- * <p>Description: This program tells what days and the time for when you can volunteer.  </p> 
- * @author Alesandel Lantigua
- */
-
 import java.util.Scanner;
 
+/**
+ * <p>Title: Volunteer Participation  </p>
+ * <p>Description: This program creates a new event object, and ask's a user for input to see if they can be added to this event  </p>
+ * @author Alesandel Lantigua
+ *
+ */
 public class Project3 {
-
-    public static void main(String[] args)
-    {
-
-        Scanner scnr = new Scanner(System.in);
-
-        char input = scnr.nextLine().charAt(0);
-
-        // declares and instantiates a CollectionEvent object
-        CollectionEvent week = new CollectionEvent('M',1100,1500);
-
-		// calls the toString method and displays the state of the object
-        if (week.scheduleVolunteer(input, input) && week.sameAs(input))
-            System.out.println("Thank you! You are scheduled to volunteer on "+ input + " from  to.\n"+ week.toString());
-        else
-            System.out.println("Sorry, we do not need volunteers at those times.\n" +week.toString());
-
-        scnr.close();
-    }
+	
+	
+	
+	public static void main(String[] args)
+	{
+		// instance variables
+		char day;
+		int start;
+		int end;
+		
+		
+		Scanner scnr = new Scanner(System.in);
+		
+		// new CollectionEvent object created
+		CollectionEvent rabiRibiing = new CollectionEvent('U', 800, 920);
+		
+		// Initializing day for the user to input what day they are available 
+		day = scnr.next().charAt(0);
+		
+		// if statement if what the user puts in for the day is the same as the Collection event and calls SameAs method will return true or false
+	 	if (rabiRibiing.SameAs(day))
+		{	 		
+			System.out.println(rabiRibiing.toString() + "\ngreat! what time from what time are you avaiable?:");
+			
+			// Initializing start and end for the user to input what day they are available
+			start = scnr.nextInt();
+			end = scnr.nextInt();
+			
+			/*
+			 *  nested if statement if what the user puts in for the start & end time is same as Collection event, 
+			 *  calls scheduleVolunteer to add user to the event if they are there for the full event
+			 */
+			if (rabiRibiing.scheduleVolunteer(start, end))
+			{
+				System.out.println("Your time has been set, thank you for coming! :D");
+				System.out.println(rabiRibiing.toString());
+			}
+			
+			else
+			{
+				System.out.println("Sorry, you need to be all in or not at all :(");
+			}			
+		}
+			
+		else
+		{
+			System.out.println("Sorry, this is not a day we have an event for.");
+			System.out.println(rabiRibiing.toString());	
+		}
+	 	
+	 	
+		
+	}
 
 }
