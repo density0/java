@@ -1,167 +1,221 @@
 package proj5;
 import java.util.Scanner;
 /**
- * <p>Title:The pig game <p>
- * <p>Description: This program shows the the pig match and tells the user points and the computer points,
- * and says who had won the game.<p>
+ * <p>Title: DiceArray  </p>
+ * <p>Description: This program creates a DiceArray object. And makes the user roll a array of 3, calculates the roll total and the number of 1's that show up.
+ * Makes 5 rounds for the player and computer, at the end calculates their total and the winner is the one with the most points.</p>
  * @author Alesandel Lantigua
  */
 
+
 public class Project5 {
+
 
 	public static void main(String[] args)
 	{
-		// instance variables
-		int total = 0;
-		int Player_Score = 0;
-		int comp_total = 0;
-		int Computer_Score = 0;
-		char again = 0;
-		int p_turns = 0;
-		int c_turns = 0;
-		int[] User_Roundtotals = new int[5];
-		int[] Comp_Roundtotals = new int [5];
-		Scanner scnr = new Scanner(System.in);
 
-		// declare & create a DiceArray object
-		DiceArray comp = new DiceArray();
-		DiceArray player = new DiceArray();
+		// game dice object
+		DiceArray pve = new DiceArray();
 		
-		// for loop for the number of rounds
-		for(int i= 0; i < 5; i++)
+		
+		Scanner user = new Scanner(System.in);
+
+		// player total score
+		int pTotal = 0;
+		// total individual round score
+		int roundTotal= 0;
+		// computer total score
+		int cTotal = 0;
+
+		// for loop to make 5 rounds 
+		for(int i = 1; i < 6; i++)
 		{
-			// while loop for the number of turns a player can do in one round
-			while(p_turns == 0)
+			System.out.println("\nRound " + i);
+			System.out.println("\nPlayer turn: ");
+			// flag var
+			boolean rollAgain = true;
+
+			// auto rolls for player at start of new round
+			pve.roll();
+
+			pTotal = pTotal + pve.calcTotalRoll();
+			roundTotal = roundTotal + pve.calcTotalRoll();
+
+
+			// if their roll has double 1's then their score for that round is reset to 0
+			if(pve.countNumOnes() == 2)
 			{
-
-				p_turns++;
-
-				//the dice roll
-				player.roll();
-				Player_Score += player.calcTotalRoll();
-				User_Roundtotals = new int[player.calcTotalRoll()];
-				total += Player_Score;
-
-				//prints out your dice roll and the total total score
-				System.out.println("\nYour roll: " + player.toString());
-				System.out.println("Your roll total is " + Player_Score);
-
-				//if statement saying what happens when your dice has 2 or 3 "1"
-				boolean passed = true;
-				
-				
-				if(player.countNumOnes() == 2)
-				{
-					
-					Player_Score = 0;
-					System.out.println("Your total score for this round is " + Player_Score);
-					passed = true;
-				}
-				else if(player.countNumOnes() == 3)
-				{
-					total = 0;
-					passed = true;
-				}
-				else
-				{
-					System.out.println("Would you like to roll again? (y/n): ");
-
-					again = scnr.next().charAt(0);
-				}
-
-				// if statement asking if you'd like to continue or not
-				if(again == 'y')
-				{
-					continue;
-				}
-				else
-				{
-					System.out.println("Your total score for this round is " + Player_Score);
-					break;
-				}
-
+				pTotal = pTotal - roundTotal;
+				roundTotal = 0;
+				rollAgain = false;
 			}
 
+			// if they rolled triple 1's then their score is reset to 0 and they lose their turn
+			else
+				if(pve.countNumOnes() == 3)
+				{
+					pTotal = 0;
+					roundTotal = 0;
+					rollAgain = false;
+				}
+
+
+			// displays the roll 
+			System.out.println(pve.toString());
+			// displays the round total
+			System.out.println("Players round score: " + roundTotal);
+			// displays the total score
+			System.out.println("Player total score: " + pTotal);
 			
-			System.out.println("");
+			// counter
+			int count = 1;
 			
-			// while statement saying to run only three times max
-			while(c_turns == 0)
+
+			// players turn
+			while(rollAgain)
 			{
-				c_turns++;
 
-				comp.roll();
-				Computer_Score += comp.calcTotalRoll();
-				Comp_Roundtotals = new int[comp.calcTotalRoll()];
-				comp_total += Computer_Score;
+				System.out.println("Would you like to roll? y/n: ");
+				char choice = user.next().charAt(0);
 
-				System.out.println("\nComputer roll: " + comp.toString());
-				System.out.println("Computer roll total is " + Computer_Score);
-
-				//if statement saying what happens when computer dice has 2 or 3 "1"
-				if(comp.countNumOnes() == 2)
+				// if player says yes than roll and count their total score
+				if(choice == 'y')
 				{
-					Computer_Score = 0;
-					break;
+
+					// player rolls
+					pve.roll();
+					// total score is added up
+					pTotal = pTotal + pve.calcTotalRoll();
+					// round total score
+					roundTotal = roundTotal + pve.calcTotalRoll();
+
+
+					// if their roll has double 1's then their score for that round is reset to 0
+					if(pve.countNumOnes() == 2)
+					{
+						pTotal = pTotal - roundTotal;
+						roundTotal = 0;
+						rollAgain = false;
+					}
+
+					// if they rolled triple 1's then their score is reset to 0 and they lose their turn
+					else
+						if(pve.countNumOnes() == 3)
+						{
+							pTotal = 0;
+							roundTotal = 0;
+							rollAgain = false;
+						}
+
+					// Displays the roll
+					System.out.println(pve.toString());
+
+					// increments count by 1
+					count++;
 				}
-				else if(comp.countNumOnes() == 3)
+				// if player doesn't enter 'y' then their turn ends
+				else
 				{
-					comp_total = 0;
-					break;
+					rollAgain = false;
 				}
 
-				// if statement ending the computer round if the total is 20
-				if(comp_total >= 20)
+
+				// once count reaches 3 then the player's turn is over
+				if(count <= 2)
 				{
-					System.out.println("\nComputer total score for this round is " + Computer_Score +"\n");
-					break;
+					System.out.println("Players round score: " + roundTotal);
+					rollAgain = true;
 				}
 				else
 				{
-					continue;
-				}	
+					System.out.println("Players round score: " + roundTotal);
+					roundTotal = 0;
+					rollAgain = false;
+				}
+
+				// Displays the total score
+				System.out.println("Player total score: " + pTotal);
+			}
+
+
+			// flag var
+			boolean compRoll = true;
+
+			// computer turn
+			System.out.println("\nComputer turn:");
+			while(compRoll)
+			{
+				// computer roll
+				pve.roll();
+
+				// adds up computer score total
+				cTotal = cTotal + pve.calcTotalRoll();
+
+				// round total score
+				roundTotal = roundTotal + pve.calcTotalRoll();
+
+				System.out.println(pve.toString());
+
+
+				// if computer roll has double 1's then their score for that round is reset to 0
+				if(pve.countNumOnes() == 2)
+				{
+
+					cTotal = cTotal - roundTotal;
+					roundTotal = 0;
+					System.out.println("Computer round score: " + roundTotal);
+					compRoll = false;
+				}
+
+				// if computer roll has triple 1's then score is reset to 0 and computer turn ends.
+				else
+					if(pve.countNumOnes() == 3)
+					{
+
+						cTotal = 0;
+						roundTotal = 0;
+						System.out.println("Computer round score: " + roundTotal);
+						compRoll = false;
+					}
+
+				// if computer score is above or equals 20 then turn ends.
+				if(roundTotal >= 20)
+				{
+					System.out.println("Computer round score: " + roundTotal);
+					roundTotal = 0;
+					compRoll = false;
+				}
+
+
+				System.out.println("Computer total score: " + cTotal);
+
 			}
 		}
-		
-		
-		int won = 0;
-		int lose = 0;
-		
-		System.out.println("The game is over");
-		System.out.println("The finals scores:");
-		System.out.println("Your Score:\t" + total);
-		System.out.println("Computer Score:\t" + comp_total);
 
-		// if statement saying if you won or not
-		if(total > comp_total)
+
+		// if computer score is greater than player score, then computer wins
+		if(cTotal > pTotal)
 		{
-			won++;
-			System.out.println("\nYou Won! your prize? dopamine.");
+			System.out.println("\nPlayer score: " + pTotal + "\nComputer score: " + cTotal);
+			System.out.println("Computer wins with: " + cTotal + " points." );
 		}
-		else if(total < comp_total)
-		{
-			lose++;
-			System.out.println("\nYou lost :(");
-		}
+
+		// player wins if player score is greater
 		else
-		{
-			System.out.println("Being tied is one step closer to lo- I mean winning");
-		}
-
-		// prints out the finals results of the match
-		System.out.println("User round totals:" );
-		System.out.println(User_Roundtotals);
-		System.out.println("Computer round totals:");
+			if(cTotal < pTotal)
+			{
+				System.out.println("\nPlayer score: " + pTotal + "\nComputer score: " + cTotal);
+				System.out.println("Player wins with: " + pTotal + " points." );
+			}
 		
-		System.out.println(Comp_Roundtotals);
-		System.out.println("You won " + won + " " + "the computer won " + lose);
-		scnr.close();
-	} 
+			// else if both have the same score then its a tie
+			else
+			{
+				System.out.println("\nPlayer score: " + pTotal + "\nComputer score: " + cTotal);
+				System.out.println("It's a tie! everybody loses!");
+			}
+
+
+		user.close();
+	}
 }
-
-
-
-
-
-
-
