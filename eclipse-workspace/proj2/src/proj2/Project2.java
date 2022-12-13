@@ -11,12 +11,22 @@ public class Project2 {
 	public static void main(String[] args)
 	{
 		// should store the position of where a space is located
-		int posOfSpace;
+		int posOfSpace; 
+		
+		/*
+		 * stores 2nd position of where the space is located
+		 */
 		int posOfSpace2;
+		
 		// should store the position of where a hyphen is located
 		int posOfHyphen;
+		
+		/*
+		 * stores position of the second and last Hyphen
+		 */
 		int posOfHyphen2;
-		int lastposOfHypen;
+		int lastOfHyhpen;
+		
 		// should store the full course information as entered by the user
 		String courseInfo; 
 
@@ -24,50 +34,53 @@ public class Project2 {
 		String dept;
 		String section;
 		String courseName;
-		String courseId;
+		int courseId;
 		int courseNum;
 		double credits;
-		
+
 		Scanner scnr = new Scanner(System.in);
-		/* use 
-		18169 CSC-120-G1 4.0-Computer Science I
-		as your initial input */
-		System.out.println("Please enter a String with the course information");
 		
+		// Initializing courseInfo for the user input the entire course
 		courseInfo = scnr.nextLine();
 		
-		/* tells first, & second position of spaces */
+		
+		// Initializing to get position of where the first and second instance of a space is in courseInfo
 		posOfSpace = courseInfo.indexOf(" ");
 		posOfSpace2 = courseInfo.indexOf(" ", posOfSpace + 2);
 		
 		
-		/* tells first, second, & last position of hyphens */
+		/* Initializes to tells first, second, & last position of hyphens */
 		posOfHyphen = courseInfo.indexOf("-");
 		posOfHyphen2 = courseInfo.indexOf("-", posOfHyphen + 2);
-		lastposOfHypen = courseInfo.lastIndexOf("-");
+		lastOfHyhpen = courseInfo.lastIndexOf("-");
 		
-		/* tells info positions of the CourseInfo  */
-		courseId = courseInfo.substring(0, posOfSpace);
-		dept = courseInfo.substring(posOfSpace,posOfHyphen);
-		courseName = courseInfo.substring(lastposOfHypen+1);
-		courseNum = Integer.parseInt(courseInfo.substring(posOfHyphen+1, posOfHyphen2 ));
-		section = courseInfo.substring(posOfHyphen2+1, posOfSpace2);
-		credits =  Double.parseDouble(courseInfo.substring(posOfSpace2+1, lastposOfHypen));
-				
-				
-		System.out.println("The course information is: " + courseInfo);
-		scnr.close();
+		
+		/* 
+		 * tells info positions of the CourseInfo 
+		 * */
+		courseId = Integer.parseInt(courseInfo.substring(0, posOfSpace));
+		dept = courseInfo.substring(posOfSpace, posOfHyphen);
+		courseNum = Integer.parseInt(courseInfo.substring(posOfHyphen+1, posOfHyphen2));
+		section =  courseInfo.substring(posOfHyphen2+1, posOfSpace2);
+		credits = Double.parseDouble(courseInfo.substring(posOfSpace2, lastOfHyhpen));
+		courseName = courseInfo.substring(lastOfHyhpen+1);
+		
+		
+		/* use 
+		18169 CSC-120-G1 4.0-Computer Science I
+		as your initial input */
+		System.out.println("Please enter a String with the course information");
+		courseInfo = scnr.nextLine();
+		
+		
 		/* prints out the Course ID */
-		System.out.println("Course Id: " + courseId);
-		
+		System.out.println("Course Id: " + courseId);	
 		
 		/* prints out the dept */
 		System.out.println("Department: " + dept);
 	
-		
 		/* prints out the courseNum */
 		System.out.println("Course Number: " + courseNum);
-	
 		
 		/* prints out the section */
 		System.out.println("Section: " + section);
@@ -78,7 +91,6 @@ public class Project2 {
 		
 		/* prints out the courseName */
 		System.out.println("Course Name: " + courseName);
-		
 		
 		/* use 
 		7531 MATH-1001-T11 4.25-Mathematical Reasoning
