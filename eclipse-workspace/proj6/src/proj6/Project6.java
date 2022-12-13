@@ -1,57 +1,64 @@
 package proj6;
+import java.io.*;
+import java.util.*;
 /**
- * <p>Title: Events <p>
- * <p>Description: This program shows the day and time an event is and what time the user can put in so they can volunteer.<p>
+ * <p>Title: Volunteer Participation  </p>
+ * <p>Description: This program creates a new event object, and ask's a user for input to see if they can be added to this event  </p>
  * @author Alesandel Lantigua
+ *
  */
-import java.io.File;
-import java.io.IOException;
-import java.util.Scanner;
-
 public class Project6 {
 
 	public static void main (String [ ] args) throws IOException
 	{
 
-		char day = 0;
-		int startTime;
-		int endTime;
+		// instance variables
+		char day = 'M' ;
+		int start = 0000;
+		int end = 0000;
+		int num = 0;
 
-		WeeksEvents damn = new WeeksEvents();
+		// new WeeksEvents object created
+		WeeksEvents soMuch = new WeeksEvents();
 
-		System.out.println("The course contains: ");
 		Scanner fileScan = new Scanner(new File("events.txt"));
 
+		// new CollectionEvent object created
+		CollectionEvent event = new CollectionEvent(day, start, end);
+		// while loop to read the event.txt file
 		while(fileScan.hasNext())
 		{
 			day = fileScan.next().charAt(0);
-			startTime = fileScan.nextInt();
-			endTime = fileScan.nextInt();
+			start = fileScan.nextInt();
+			end = fileScan.nextInt();
 
-			System.out.println(day + " " + startTime + " " + endTime);
-
-
-			CollectionEvent divorce = new CollectionEvent(day, startTime, endTime);
-
-			damn.addEvent(divorce);
-
-
+			event = new CollectionEvent(day, start, end);
+			soMuch.addEvent(event);
+			num++;
 		}
 		fileScan.close();
-		System.out.println("\n"+damn);
-
-		Scanner scnr = new Scanner(System.in);
-
-		System.out.println("please enter what day and time you would like to volunteer:\n");
 
 
-		char dayOfWeek = scnr.next().charAt(0);
-		int input = scnr.nextInt();
-		int ending = scnr.nextInt();
+		System.out.println(soMuch.toString());
+		Scanner user = new Scanner(System.in);
 
-		
 
-		System.out.println(damn.scheduleVolunteer(dayOfWeek, input, ending));
-		
-	}	
+		// while loop for asking and scheduling the user 
+		while(soMuch.totalVolunteersNeeded() != 0)
+		{
+			int openSpace = soMuch.totalVolunteersNeeded();
+
+			System.out.println("please enter the day, start and end time: ");
+			
+			day = user.next().charAt(0);
+			start = user.nextInt();
+			end = user.nextInt();
+			
+			soMuch.scheduleVolunteer(day, start, end);
+
+			System.out.println(soMuch.toString());
+			System.out.println(openSpace + " volunteers are still needed for this week's events!");
+		}
+		user.close();
+	}
 }
