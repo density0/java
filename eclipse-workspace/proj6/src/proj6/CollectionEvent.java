@@ -1,81 +1,118 @@
 package proj6;
+
 /**
- * <p>Title:Collection Event <p>
- * <p>Description: This program creates the time and the day the event is.<p>
+ * <p>Title: Volunteer Participation  </p>
+ * <p>Description: This class defines a CollectionEvent object by specifying the
+ * what day the event starts, the start and end times, and when/if a volunteer can be added to the event</p>
  * @author Alesandel Lantigua
+ *
  */
 public class CollectionEvent {
 	
-	// instance variables
+	//instance variables
 	private final int VOLS_NEEDED = 3;
-	private char day;
-	private int timeStart; 
-	private int timeEnd;
-	private int numVolunteer;
+	private char weekDay;
+	private int eventStart;
+	private int eventEnd;
+	private int volunteers;
+	
 	
 	/**
+	 * default constructor
+	 * sets the instance variables to default values
+	 * 
+	 */
+	public CollectionEvent()
+	{
+		char weekDay = ('.');
+		
+		eventStart = 0;
+		eventEnd = 0;
+		volunteers = 0;
+		
+	}
+	
+	/** 
 	 * parameterized constructor
-	 * @param weekdays
-	 * @param min
-	 * @param max
+	 * sets instance variables for weekDay, eventStart, & eventEnd
+	 * to parameters, the other instance variable is set to a default
+	 * @param day is the week day
+	 * @param starting is when the event starts
+	 * @param ending is when the event ends
 	 */
-	public CollectionEvent (char weekdays, int beginning , int ending)
+	public CollectionEvent(char days, int starting, int ending)
 	{
-		day = weekdays;
-		timeStart = beginning;
-		timeEnd = ending;
-		numVolunteer = 0;
+		weekDay = days;
+		eventStart = starting;
+		eventEnd = ending;
+		volunteers = 0;
 	}
 	
-	/**
-	 * accessor method for Start time
-	 * @return the times of which it starts and ends
+	/** 
+	 * accessor method for the event start
+	 * returns value stored in the instance variable eventStart
+	 * @return the start time of the event
 	 */
-	public int setTimeStart(int start)
+	public int getStart()
 	{
-		return timeStart;	
+		return eventStart;
 	}
 	/**
-	 * accessor method for End time
-	 * @param end
-	 * @return the time the event ends
+	 * accessor method for the event end
+	 * returns value stored in the instance variable eventEnd
+	 * @return the end time of the event 
 	 */
-	public int setTimeEnd(int end)
+	public int getEnd()
 	{
-		return timeEnd;
-	}
-	
-	/**
-	 * sameAs method
-	 * This method determines what days are available
-	 * for volunteering
-	 * @param weekdays 
-	 * @return true if day equals weekdays
-	 */
-	public boolean sameAs (char weekdays)
-	{
-		if (day == weekdays)
-		return true;
-		else
-			return false;
+		return eventEnd;
 	}
 	
+	
 	/**
-	 * scheduleVolunteer method
-	 * This method determines the time of the event 
-	 * which you can volunteer
-	 * @return true if the time is equal to start and end time
+	 * SameAs method
+	 * This method returns what day of the week the event will be taking place
+	 * @param days
+	 * @return true if the input for the event is the same as the weekDay of the event, false otherwise
 	 */
-
-	public boolean scheduleVolunteer(int min, int max)
+	public boolean sameAs(char days)
 	{
-		if (timeStart == min &&  timeEnd == max)
+		
+		if (days == weekDay)
 		{
-			numVolunteer++;
 			return true;
 		}
 		else
+		{
+			
 			return false;
+		}
+		
+	}
+	
+	/**
+	 * scheduleVolunteer
+	 * This method returns what start and end time the user puts in for when they are available
+	 * 
+	 * @param startTime
+	 * @param endTime
+	 * @return true if the user input is the same as the start time and end time, then adds the number of volunteers for that event, false otherwise
+	 */
+	public boolean scheduleVolunteer(int startTime, int endTime)
+	{
+		
+		if((startTime <= eventStart) && (endTime >= eventEnd))
+		{
+			volunteers = volunteers + 1;
+			return true;
+		}
+		
+		else
+		{	
+			
+			return false;
+			
+		}	
+		
 	}
 	
 	/**
@@ -83,24 +120,20 @@ public class CollectionEvent {
 	 * this method:
 	 * @return number of Volunteers needed
 	 */
-	
 	public int determineVolunteersNeeded()
 	{
-		return VOLS_NEEDED - numVolunteer;
+		return VOLS_NEEDED - volunteers;
 	}
 	
 	/**
-	 * toString method 
-	 * creates & returns a String with the day, when the time starts 
-	 * and ends with the number of volunteers for those times
+	 * toString method
+	 * this method creates and returns a reference to a String object with the state of the object
+	 * @return the values stored in the instance variables 
 	 */
 	public String toString()
 	{
-		String str = new String ("Collection day: " + day + "\nStart time: " + timeStart + "\nEnd time: " + timeEnd + "\nNumber of volunteers: " + numVolunteer);
+		String str = new String("\nCollection occurs on: " + weekDay + "\nStart time: " + eventStart + "\nEnd time: " + eventEnd + "\nNumber of volunteers: " + volunteers);
 		return str;
 	}
-	
-	
-	
-}
 
+}
