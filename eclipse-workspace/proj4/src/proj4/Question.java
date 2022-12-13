@@ -1,64 +1,90 @@
 package proj4;
 import java.util.Random;
-/**<p>Title: Math Problems </p>
- * <p>Description: This program generates random plus or minus math problems. </p>
+
+/**
+ * <p>Title: Math Questions  </p>
+ * <p>Description: This program creates addition/subtraction basic math questions  </p>
  * @author Alesandel Lantigua
  */
+
 public class Question {
-	//instance variables 
-	private	int number1;
-	private	int number2;
+
+	private int num1;
+	private int num2;
 	private char operator;
 
-	/**
+	/*
 	 * default constructor
-	 * sets the instance variables to default values
+	 * sets the instance variables to default values 
 	 */
 	public Question()
 	{
-		Random randGen = new Random();
-		number1 = randGen.nextInt(6) + 7;
-		number2 = randGen.nextInt(5);
-		operator = randGen.nextBoolean() ? '+' : '-';
-	}
 
+		Random randGen = new Random();
+		
+
+		// randomly generates two characters '-' and '+'
+		operator = randGen.nextBoolean()? '-' : '+';
+
+		
+		// if operator is "+" then num1 & num2 will be range 0-12, otherwise one is 0-12 and 6-12
+			if(operator == '+')
+			{
+				// num1 & num2 are in the range of 0-12
+				num1 = randGen.nextInt(13);
+				num2 = randGen.nextInt(13);
+			}
+			else
+				{
+					// num1 range is 0-12, and num2 range is 6-12
+					num1 = randGen.nextInt(13);
+					num2 = randGen.nextInt(12)+6;
+					
+					if(num1 > num2)
+					{	// num1 equals num2 if num1 bigger than num2
+						num1 = num2;
+					}
+				}
+	
+	}		
+			
 
 	/**
 	 * toString method
-	 * this method creates and returns a reference to a String object with the state of the object
-	 * @return the value of the instance variables
+	 * * this method creates and returns a reference to a String object with the state of the object
+	 * @return the values stored in the instance variables 
 	 */
-	public String toString()
+	public String toString() 
 	{
-		String str = new String (number1 + " " + operator + " " + number2 + " =");
-		return str;
+			String str = new String(num2 + " " + operator + " " + num1 + " = ");
+			return str;
+		
 	}
 
-	
 	/**
-	 * accessor method
-	 * this method returns the + or - operator
-	 * @return + or - sign
+	 * accessor method for operator
+	 * returns the value stored for the operator
+	 * @return the symbol used in the math question
 	 */
 	public char getOperator()
 	{
 		return operator;
 	}
 
-	
 	/**
 	 * determineAnswer method
-	 * this method adds/subtracts the 2 numbers 
-	 * @return the total value 
+	 * determines the answer with nested if else statements
+	 * @return what final value is stored in a question by what operator is being used
 	 */
 	public int determineAnswer()
 	{
 		if (operator == '+' )
-			return (number1 + number2);
+		{
+			return (num2 + num1);
+		}
 		else 
-			if(operator == '-')
-				return (number1 - number2);
-			else
-				return number1;
+			{
+				return (num2 - num1);
+			}	
 	}	
 }
