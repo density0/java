@@ -1,75 +1,81 @@
 package proj6;
 /**
- * <p>Title: WeeksEvents <p>
- * <p>Description: This program shows the weekEvents as a ref to the CollectionEvent<p>
+ * <p>Title: Volunteer Participation  </p>
+ * <p>Description: This program creates a new WeeksEvents object. that stores a reference array of CollectionEvent. It makes a method to 
+ * schedule a volunteer, adds a CollectionEvent object to the array, tell you the total needed for all events  </p>
  * @author Alesandel Lantigua
+ *
  */
-
-
 public class WeeksEvents {
 
-	private CollectionEvent[] weekEvents;
-	private int events;
+
+	private CollectionEvent[] events;
+	private int numEvents;
 
 
+	/**
+	 * default constructor
+	 * sets the instance variables to default values
+	 */
 	public WeeksEvents()
 	{
-		weekEvents = new CollectionEvent[10];
-		events = 0;
+		events = new CollectionEvent[10];
+		numEvents = 0;
 	}
 
 	/**
 	 * addEvent method
-	 * stores the CollectionEvent passed to the method in the
-	 * next available location in the array and increments
-	 * the number of CollectionEvent by 1
-	 * @param eve the CollectionEvent to be placed in the array
+	 * adds new event object to WeeksEvent array
+	 * @param event
 	 */
-	public void addEvent(CollectionEvent eve)
+	public void addEvent(CollectionEvent event)
 	{
-		if (events < weekEvents.length) 
+		if(numEvents < events.length)
 		{
-			weekEvents[events] = eve;
-			events++;
+			events[numEvents] = event;
+			numEvents++;
 		}
 	}
-
+	
 	/**
 	 * scheduleVolunteer method
-	 * find the first CollectionEvent
-	 * that still needs volunteers and matches the volunteer’s availability
+	 * adds a volunteer to a CollectionEvent object
+	 * 
 	 * @param day
-	 * @param min
-	 * @param max
-	 * @return  reference to weekEvent if true and null if false
+	 * @param start
+	 * @param end
+	 * @return a reference to CollectionEvent 
 	 */
-	public CollectionEvent scheduleVolunteer(char day, int min, int max)
+	public CollectionEvent scheduleVolunteer (char day, int start, int end)
 	{
-		for(int i = 0; i < events; i++)
+		CollectionEvent con = events[0];
+
+		for(int i = 0; i < numEvents; i++)
 		{
-
-			if(weekEvents[i].sameAs(day) && (weekEvents[i].determineVolunteersNeeded() > 0)  &&  weekEvents[i].scheduleVolunteer(min, max))
+			if(events[i].sameAs(day))
 			{
+				if(events[i].determineVolunteersNeeded() != 0 && events[i].scheduleVolunteer(start, end) == true && events[i].sameAs(day) == true)
+				{
+					con = events[i];
 
-				return weekEvents[i];
-
+				}
 			}
-
 		}
-		return null;	
+		return con;
 	}
 
+
 	/**
-	 * needsMoreVolunteers method
-	 * shows how many vols are needed for events
+	 * totalVolunteersNeeded method
+	 * tells the number of volunteers still needed for the events
 	 * @return the number of volunteers still needed
 	 */
 	public boolean needsMoreVolunteers()
 	{
-		for(int i = 0; i < events; i++)
-		{
 
-			if(weekEvents[i].determineVolunteersNeeded() > 0)
+		for(int i = 0; i < numEvents; i++)
+		{
+			if(events[i].determineVolunteersNeeded() != 0)
 			{
 				return true;
 			}
@@ -78,30 +84,31 @@ public class WeeksEvents {
 		return false;
 	}
 
+
 	/**
 	 * totalVolunteersNeeded method
 	 * tells the number of volunteers still needed for the events
-	 * @return 
+	 * @return the total amount of volunteers needed for the entire WeeksEvents
 	 */
 	public int totalVolunteersNeeded()
 	{
-		for(int i = 0; i < events; i++)
-		{
-			return weekEvents[i].determineVolunteersNeeded();
-		}
-		return events;
-	}
-	
-	 
+		int left = 0;
 
+		for(int i = 0; i < numEvents; i++)
+		{
+			left = left + events[i].determineVolunteersNeeded();
+		}
+		return left;
+	}
+
+	
 	public String toString()
 	{
 		String str = new String();
-		for(int i = 0; i<events; i++)
-			str = str + weekEvents[i].toString() + "\n";
+		for (int i = 0; i < numEvents; i++)
+		{
+			str = str + events[i] + "\n";
+		}
 		return str;
 	}
-
-
-
 }
