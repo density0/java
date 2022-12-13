@@ -1,80 +1,98 @@
 package proj5;
 import java.util.Random;
+
 /**
- * <p>Title:The pig game <p>
- * <p>Description: This program sets up the game for the number of dice roll and what numbers it could generate, the total of dice when rolled,
- * The number on "1's" on the dices rolled, and the toString to show what was rolled.<p>
+ * <p>Title: DiceArray  </p>
+ * <p>Description: This program creates a DiceArray object, each roll is default is 0 and each one is rolled from the range 1-6,
+ * It calculates the total number from the rolls and counts how many 1's show up in each roll.   </p>
  * @author Alesandel Lantigua
  */
 public class DiceArray {
-	private int[] theDice;
+	// declares array variable
+	private int[] dice;
 	
 	
 	/**
-	 * default constructor
-	 * creates theDice array of size 3 & initializes each element to 0
+	 * Default Constructor
+	 * sets the default values for each array item in the dice array variable
+	 * 
 	 */
 	public DiceArray()
 	{
-		theDice = new int [3];
-		for (int i=0; i<theDice.length; i++)
-			theDice[i] = 0;
+		dice = new int[3];
+		for(int i = 0; i < dice.length; i++)
+		{
+			dice[i] = 0;
+		}	
 	}
+	
 	
 	/**
 	 * roll method
-	 * stores a random number in the range 1 to 6 in each of the 3 die
+	 * 
+	 * rolls each array from the range 1-6
 	 */
 	public void roll()
 	{
 		Random randGen = new Random();
-		for (int i = 0; i<theDice.length; i++)
+		for(int i = 0; i < dice.length; i++)
 		{
-			theDice[i] = randGen.nextInt(6) + 1;
+			dice[i] = randGen.nextInt(6)+1;
 		}
 	}
 	
+	
 	/**
 	 * calcTotalRoll method
-	 * adds up the roll numbers and gives the total
-	 * @return the total number the dice adds up to
+	 * adds the total of all three arrays 
+	 * @return the total roll 
 	 */
 	public int calcTotalRoll()
 	{
 		int total = 0;
 		
-		for (int i = 0; i<theDice.length; i++) 
-			total = total + theDice[i];
+		for(int i = 0; i < dice.length; i++)
+		{
+			total = total + dice[i];
+		}
 		return total;
+		
 	}
 	
+	
 	/**
-	 * countNumOnes
-	 * determines how many of the dice have a a face value of 1
-	 * @return the number of ones
+	 * countNumOnes method
+	 * checks if any of the dice array items rolled a 1 and then counts how many 1's there were between the 3 rolls
+	 * @return countOne
 	 */
 	public int countNumOnes()
 	{
-		int count = 0;
-		for (int i = 0; i<theDice.length; i++)
+		int countOne = 0;
+		
+		for (int i = 0; i < dice.length; i++)
 		{
-			if (theDice[i] == 1)
-				count++;
+			if (dice[i] == 1)
+			{
+				countOne++;
+			}		
 		}
-		return count;
+		
+		return countOne;
 	}
-
+	
+	
 	/**
 	 * toString method
-	 * creates a String with the values of each of the three dice
-	 * @return the String with the state of the object
+	 * creates & returns a String with the face values of the 3 die
+	 * @return the state of the object
 	 */
 	public String toString()
 	{
-		String str = new String ();
-		for (int i = 0; i<theDice.length; i++)
-			str = str + theDice[i] + " ";
+		 String str = new String(); 
+		for(int i = 0; i < dice.length; i++)
+		{
+			str = str + dice[i] + " " ;
+		}
 		return str;
 	}
-
 }
