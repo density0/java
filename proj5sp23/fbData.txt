@@ -1,0 +1,34 @@
+A Sue
+A John
+A Mike
+A Jan
+A Ellen
+A Joe
+A Maria
+A Jim
+F John Jan
+F Joe Maria
+F Joe Sue
+F Jim Ellen
+F Ellen Sue
+F Ellen Maria
+F John Ellen
+F John John
+L Mike
+L Ellen
+L John
+Q Ellen Maria
+Q Jim Ellen
+Q Mike John
+Q Mike Lori
+Q Sue Jim
+U Jim Ellen
+U Mike Joe
+U John Ellen
+F Jim Mike
+F Mike Sue
+F Jim Jan
+F Ellen Mike
+U Joann Ellen
+U John Jan
+Q Mike Sue
